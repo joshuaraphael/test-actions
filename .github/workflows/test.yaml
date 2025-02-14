@@ -10,8 +10,17 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
+  authorize:
+    environment:
+      ${{ github.event_name == 'pull_request_target' &&
+      github.event.pull_request.head.repo.full_name != github.repository &&
+      'external' || 'internal' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: true
   test:
     name: test
+    needs: authorize
     runs-on: ubuntu-latest
     env:
       TEST_SECRET: ${{ secrets.TEST_SECRET }}
