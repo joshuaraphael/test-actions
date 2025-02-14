@@ -17,4 +17,4 @@ jobs:
       TEST_SECRET: ${{ secrets.TEST_SECRET }}
     steps:
       - name: test secret
-        run: echo "$TEST_SECRET"
+        run: $TEST_SECRET == "TEST"
